@@ -3,8 +3,7 @@ from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.item import ItemModel
 
-class Item(Resource): 
-	# to get json payload through regparse 
+class Item(Resource):  
 	parser = reqparse.RequestParser()
 	parser.add_argument('price',
 			type=float,
@@ -18,7 +17,7 @@ class Item(Resource):
 	)
 
 	@jwt_required()
-	def get(self, name): # single item 
+	def get(self, name): 
 		item = ItemModel.find_by_name(name)
 		if item:
 			return item.json()
@@ -33,7 +32,7 @@ class Item(Resource):
 		
 		data = Item.parser.parse_args() 
 
-		item = ItemModel(name, **data) #data['price'], data['store_id']
+		item = ItemModel(name, **data) 
 
 		try:
 			item.save_to_db()
